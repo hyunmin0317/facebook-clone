@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<main role="main">
+    <br><br>
+      <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">Facebook</h1><br><br>
+        </div>
+      </section>
+
+      <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="album py-5 bg-light">
+              <div class="container">
+                  <div class="row">
+                  {% for post in posts %}
+                    <div class="col-md-4">
+                      <div class="card mb-4 shadow-sm">
+                          <li class="list-group-item">{{ post.author }}</li>
+                          <img class="card-img-top" src="{{ post.image.url }}" alt=" Card image cap">
+                          <div class="card-body">
+                              <h4>{{ post.title }}</h4>
+                              <p class="card-text">{{ post.content }}</p>
+                              <p class="card-text">{{ post.voter.count }}</p>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+{% endblock %}
