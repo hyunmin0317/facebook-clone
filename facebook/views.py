@@ -2,6 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
@@ -10,6 +11,14 @@ def home(request):
     posts = Post.objects.order_by('-create_date')
     context = {'posts' : posts}
     return render(request, 'facebook/home.html', context)
+
+def post_user(request, username):
+    user = get_object_or_404(User, username=username)
+    posts = Post.objects.filter(author=user)
+    context = {'user' : user, 'posts' : posts}
+    return render(request, 'facebook/post_user.html', context)
+
+
 
 def post_create(request):
     if request.method == 'POST':
