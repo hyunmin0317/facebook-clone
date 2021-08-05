@@ -70,3 +70,9 @@ def comment_delete_post(request, comment_id):
     else:
         comment.delete()
     return redirect('home')
+
+@login_required(login_url='common:login')
+def vote_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    post.voter.add(request.user)
+    return redirect('home')

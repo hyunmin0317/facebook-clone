@@ -16,6 +16,7 @@
                               <h4>{{ post.title }}</h4>
                               <p class="card-text">{{ post.content }}</p>
                               <p class="card-text">{{ post.voter.count }}</p>
+                               <a href="{% url 'facebook:vote_post' post.id  %}" class="recommend btn btn-sm btn-secondary btn-block my-1">추천</a>
 
                               {% if post.comment_set.count > 0 %}
                                 <div class="mt-3">
