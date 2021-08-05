@@ -30,8 +30,7 @@
                                         </span>
                                         {% if request.user == comment.author %}
                                         <a href="{% url 'facebook:comment_modify_post' comment.id  %}" class="small">수정</a>,
-                                        <a href="#" class="small delete"
-                                           data-uri="{% url 'facebook:comment_delete_post' comment.id  %}">삭제</a>
+                                        <a href="{% url 'facebook:comment_delete_post' comment.id  %}" class="small delete">삭제</a>
                                         {% endif %}
                                     </div>
                                 {% endfor %}
