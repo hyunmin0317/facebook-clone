@@ -29,7 +29,7 @@ def post_create(request):
             post.author = request.user
             post.create_date = timezone.now()
             post.save()
-            return redirect('home')
+            return redirect('facebook:post_user', username=post.author.username)
     else:
         form = PostForm()
     context = {'form': form}
