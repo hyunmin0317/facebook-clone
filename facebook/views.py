@@ -17,7 +17,7 @@ def post_user(request, username):
     user = get_object_or_404(User, username=username)
     posts = Post.objects.filter(author=user)
     profile = get_object_or_404(Profile, user=user)
-    context = {'user' : user, 'posts' : posts, 'profile' : profile}
+    context = {'users' : user, 'posts' : posts, 'profile' : profile}
     return render(request, 'facebook/post_user.html', context)
 
 @login_required(login_url='common:login')
@@ -34,6 +34,34 @@ def post_create(request):
         form = PostForm()
     context = {'form': form}
     return render(request, 'facebook/post_form.html', context)
+
+@login_required(login_url='common:login')
+def post_modify(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.user != post.author:
+        messages.error(request, '수정권한이 없습니다')
+        return redirect('facebook:post_user', username=post.author.username)
+
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.modify_date = timezone.now()  # 수정일시 저장
+            post.save()
+            return redirect('facebook:post_user', username=post.author.username)
+    else:
+        form = PostForm(instance=post)
+    context = {'form': form}
+    return render(request, 'facebook/post_form.html', context)
+
+@login_required(login_url='common:login')
+def post_delete(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.user != post.author:
+        messages.error(request, '삭제권한이 없습니다')
+        return redirect('facebook:post_user', username=post.author.username)
+    post.delete()
+    return redirect('facebook:post_user', username=post.author.username)
 
 @login_required(login_url='common:login')
 def comment_create_post(request, post_id):
