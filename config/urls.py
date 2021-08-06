@@ -24,7 +24,6 @@ urlpatterns = [
     path('common/', include('common.urls')),
     path('facebook/', include('facebook.urls')),
     path('', facebook.views.home, name='home'),
-    path('instagram/', facebook.views.instagram),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

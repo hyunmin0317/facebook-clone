@@ -6,7 +6,6 @@ app_name='facebook'
 urlpatterns = [
     path('', views.home, name='home'),
     path('post/<str:username>', views.post_user, name='post_user'),
-    path('change/<str:username>', views.change_user, name='change_user'),
     path('post/create/', views.post_create, name='post_create'),
     path('comment/create/post/<int:post_id>/', views.comment_create_post, name='comment_create_post'),
     path('comment/modify/question/<int:comment_id>/', views.comment_modify_post, name='comment_modify_post'),

@@ -20,8 +20,7 @@ def post_user(request, username):
     context = {'user' : user, 'posts' : posts, 'profile' : profile}
     return render(request, 'facebook/post_user.html', context)
 
-
-
+@login_required(login_url='common:login')
 def post_create(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
@@ -87,6 +86,3 @@ def vote_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     post.voter.add(request.user)
     return redirect('home')
-
-def instagram(request):
-    return render(request, 'facebook/instagram.html')
