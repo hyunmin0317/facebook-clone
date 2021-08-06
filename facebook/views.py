@@ -85,3 +85,6 @@ def vote_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     post.voter.add(request.user)
     return redirect('home')
+
+def instagram(request):
+    return render(request, 'facebook/instagram.html')
