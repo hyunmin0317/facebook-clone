@@ -8,7 +8,7 @@ class Post(models.Model):
     content = models.TextField()
     create_date = models.DateTimeField()
     modify_date = models.DateTimeField(null=True, blank=True)
-    voter = models.ManyToManyField(User, null=True, blank=True, related_name='voter_post')
+    voter = models.ManyToManyField(User, blank=True, related_name='voter_post')
 
     def __str__(self):
         return self.title

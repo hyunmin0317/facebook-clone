@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from common.forms import UserForm
+from .models import Profile
 
 # 계정생성
 def signup(request):
@@ -11,6 +12,8 @@ def signup(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)  # 사용자 인증
+            profile = Profile(user=user)
+            profile.save()
             login(request, user)  # 로그인
             return redirect('home')
     else:

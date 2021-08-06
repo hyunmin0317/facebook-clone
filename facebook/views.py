@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+from common.models import Profile
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
 
@@ -15,7 +16,8 @@ def home(request):
 def post_user(request, username):
     user = get_object_or_404(User, username=username)
     posts = Post.objects.filter(author=user)
-    context = {'user' : user, 'posts' : posts}
+    profile = get_object_or_404(Profile, user=user)
+    context = {'user' : user, 'posts' : posts, 'profile' : profile}
     return render(request, 'facebook/post_user.html', context)
 
 

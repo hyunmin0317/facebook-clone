@@ -6,9 +6,7 @@
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
-
 <div class="bodys">
-
     <div class="album bg-light">
         <div class="container-sm">
             <div class="album bg-light">
@@ -17,7 +15,11 @@
                     <div class="containers">
                         <div class="profile">
                             <div class="profile-image">
+                                {% if profile.image %}
+                                <img src="{{profile.image.url}}" alt="">
+                                {% else %}
                                 <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">
+                                {% endif %}
                             </div>
                             <div class="profile-user-settings">
                                 <h1 class="profile-user-name">{{user.username}}</h1>
