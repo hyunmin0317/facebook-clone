@@ -17,7 +17,7 @@ class ProfileForm(forms.ModelForm):
         fields = ['image']
 
         labels = {
-            'image': ' ',
+            'image': '프로필 사진',
         }
 
         widgets = {

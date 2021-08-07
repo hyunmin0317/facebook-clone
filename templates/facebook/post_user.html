@@ -24,7 +24,11 @@
                             <div class="profile-user-settings"><br>
                                 <h1 style="padding-left:30px;">{{users.username}}</h1>
                                 {% if request.user == users %}
-                                    <button type="submit" class="btn profile-edit-btn">Edit Profile</button>
+                                <a href="{% url 'common:modify' users.username  %}">
+                                    <button type="submit" class="btn profile-edit-btn" href="{% url 'common:modify' users.username  %}">
+                                        Edit Profile
+                                    </button>
+                                </a>
                                 {% endif %}
                             </div>
 
@@ -61,7 +65,7 @@
                                   <h4>{{ post.title }}</h4>
                                   <p class="card-text">{{ post.content }}</p>
                                   <p class="card-text">{{ post.voter.count }}</p>
-                                   <a href="{% url 'facebook:vote_post' post.id  %}" class="recommend btn btn-sm btn-secondary btn-block my-1">추천</a>
+                                   <a href="{% url 'facebook:vote_post' post.id 'post' %}" class="recommend btn btn-sm btn-secondary btn-block my-1">추천</a>
                                   {% if request.user == post.author %}
                                   <div class="my-3">
                                       <a href="{% url 'facebook:post_modify' post.id  %}"
@@ -81,15 +85,15 @@
                                                 {% endif %}
                                             </span>
                                             {% if request.user == comment.author %}
-                                            <a href="{% url 'facebook:comment_modify_post' comment.id  %}" class="small">수정</a>,
-                                            <a href="{% url 'facebook:comment_delete_post' comment.id  %}" class="small delete">삭제</a>
+                                            <a href="{% url 'facebook:comment_modify_post' comment.id 'post' %}" class="small">수정</a>,
+                                            <a href="{% url 'facebook:comment_delete_post' comment.id 'post' %}" class="small delete">삭제</a>
                                             {% endif %}
                                         </div>
                                     {% endfor %}
                                     </div>
                                     {% endif %}
                                     <div>
-                                        <a href="{% url 'facebook:comment_create_post' post.id  %}"
+                                        <a href="{% url 'facebook:comment_create_post' post.id 'post' %}"
                                            class="small"><small>댓글 추가 ..</small></a>  <!-- 댓글 추가 링크 -->
                                     </div>
 

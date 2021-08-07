@@ -64,7 +64,7 @@ def post_delete(request, post_id):
     return redirect('facebook:post_user', username=post.author.username)
 
 @login_required(login_url='common:login')
-def comment_create_post(request, post_id):
+def comment_create_post(request, post_id, before):
     post = get_object_or_404(Post, pk=post_id)
     if request.method == "POST":
         form = CommentForm(request.POST)
@@ -74,14 +74,16 @@ def comment_create_post(request, post_id):
             comment.create_date = timezone.now()
             comment.post = post
             comment.save()
-            return redirect('home')
+            if(before=='home'):
+                return redirect('home')
+            return redirect('facebook:post_user', post.author.username)
     else:
         form = CommentForm()
     context = {'form': form}
     return render(request, 'facebook/comment_form.html', context)
 
 @login_required(login_url='common:login')
-def comment_modify_post(request, comment_id):
+def comment_modify_post(request, comment_id, before):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user != comment.author:
         messages.error(request, '댓글수정권한이 없습니다')
@@ -93,24 +95,29 @@ def comment_modify_post(request, comment_id):
             comment = form.save(commit=False)
             comment.modify_date = timezone.now()
             comment.save()
-            return redirect('home')
+            if (before == 'home'):
+                return redirect('home')
+            return redirect('facebook:post_user', comment.post.author.username)
     else:
         form = CommentForm(instance=comment)
     context = {'form': form}
     return render(request, 'facebook/comment_form.html', context)
 
 @login_required(login_url='common:login')
-def comment_delete_post(request, comment_id):
+def comment_delete_post(request, comment_id, before):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user != comment.author:
         messages.error(request, '댓글삭제권한이 없습니다')
-        return redirect('home')
     else:
         comment.delete()
-    return redirect('home')
+    if (before == 'home'):
+        return redirect('home')
+    return redirect('facebook:post_user', comment.post.author.username)
 
 @login_required(login_url='common:login')
-def vote_post(request, post_id):
+def vote_post(request, post_id, before):
     post = get_object_or_404(Post, pk=post_id)
     post.voter.add(request.user)
-    return redirect('home')
+    if(before=='home'):
+        return redirect('home')
+    return redirect('facebook:post_user', post.author.username)
