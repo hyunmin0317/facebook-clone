@@ -9,7 +9,7 @@
             <span>또는 <a href="{% url 'common:login' %}">로그인 하세요.</a></span>
         </div>
     </div>
-    <form method="post" class="post-form" action="{% url 'common:signup' %}">
+    <form method="post" class="post-form" action="{% url 'common:signup' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {% include "form_errors.html" %}
         <div class="form-group">
@@ -32,6 +32,7 @@
             <input type="text" class="form-control" name="email" id="email"
                    value="{{ form.email.value|default_if_none:'' }}">
         </div>
+        {{ forms.as_p }}
         <button type="submit" class="btn btn-primary">생성하기</button>
     </form>
 </div>
