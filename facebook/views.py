@@ -121,3 +121,15 @@ def vote_post(request, post_id, before):
     if(before=='home'):
         return redirect('home')
     return redirect('facebook:post_user', post.author.username)
+
+def follow(request):
+    profiles = Profile.objects.all()
+    context = {'profiles':profiles}
+    return render(request, 'facebook/follow.html', context)
+
+@login_required(login_url='common:login')
+def following(request, username):
+    profile = get_object_or_404(Profile, user=request.user)
+    user = get_object_or_404(User, username=username)
+    profile.follow.add(user)
+    return redirect('home')

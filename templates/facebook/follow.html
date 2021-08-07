@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+<div class="bodys"><br>
+    <div class="album bg-light">
+        <div class="container-sm">
+            <div class="album bg-light">
+              <div class="container">
+                  {% for profile in profiles %}
+                  <div class="row">
+                      <div class="container">
+                          <div class="card shadow-sm">
+                              <div>
+                                  <div class="profile-image" style="margin-left:10px;">
+                                      {% if profile.image %}
+                                      <img src="{{profile.image.url}}" width="40" height="40">
+                                      {% else %}
+                                      <img src="{% static 'profile.jpg' %}" width="40" height="40">
+                                      {% endif %}
+                                      <div style="margin-left:10px;">
+                                          <a href="{% url 'facebook:post_user' profile.user.username %}" class="list-group-item">
+                                              {{ profile.user.username }}
+                                          </a>
+                                      </div>
+
+                                      <a href="{% url 'facebook:following' profile.user.username  %}">
+                                          <button type="submit" class="btn profile-edit-btn">
+                                              follow
+                                          </button>
+                                      </a>
+                                  </div>
+
+
+
+                              </div>
+
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+{% endblock %}

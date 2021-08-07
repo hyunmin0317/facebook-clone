@@ -26,7 +26,7 @@
                                 {% if request.user == users %}
                                 <a href="{% url 'common:modify' users.username  %}">
                                     <button type="submit" class="btn profile-edit-btn" href="{% url 'common:modify' users.username  %}">
-                                        Edit Profile
+                                        프로필 편집
                                     </button>
                                 </a>
                                 {% endif %}
@@ -35,8 +35,8 @@
                             <div class="profile-stats">
                                 <ul>
                                     <li><span class="profile-stat-count">{{posts.count}}</span> posts</li>
-                                    <li><span class="profile-stat-count">188</span> followers</li>
-                                    <li><span class="profile-stat-count">206</span> following</li>
+                                    <li><span class="profile-stat-count">100</span> followers</li>
+                                    <li><span class="profile-stat-count">{{profile.follow.count}}</span> following</li>
                                 </ul>
                             </div>
                         </div>

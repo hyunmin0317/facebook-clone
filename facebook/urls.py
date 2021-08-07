@@ -13,4 +13,6 @@ urlpatterns = [
     path('comment/modify/question/<int:comment_id>/<str:before>/', views.comment_modify_post, name='comment_modify_post'),
     path('comment/delete/question/<int:comment_id>/<str:before>/', views.comment_delete_post, name='comment_delete_post'),
     path('vote/post/<int:post_id>/<str:before>/', views.vote_post, name='vote_post'),
+    path('follow/', views.follow, name='follow'),
+    path('follow/<str:username>', views.following, name='following'),
 ]

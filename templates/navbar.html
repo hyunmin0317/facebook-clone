@@ -12,6 +12,9 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'facebook:post_create' %}">글쓰기</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'facebook:follow' %}">친구추천</a>
+            </li>
 
             {% if user.is_authenticated %}
             <li class="nav-item dropdown">
