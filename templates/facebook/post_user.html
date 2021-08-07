@@ -18,13 +18,15 @@
                                 {% if profile.image %}
                                 <img src="{{profile.image.url}}" alt="">
                                 {% else %}
-                                <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="">
+                                <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" style="padding-left:20px;">
                                 {% endif %}
                             </div>
                             <div class="profile-user-settings">
-                                <h1 class="profile-user-name">{{user.username}}</h1>
+                                <h1 style="padding-left:30px;">{{users.username}}</h1>
+                                {% if request.user == users %}
                                 <button class="btn profile-edit-btn">Edit Profile</button>
                                 <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+                                {% endif %}
                             </div>
                             <div class="profile-stats">
                                 <ul>
@@ -32,9 +34,6 @@
                                     <li><span class="profile-stat-count">188</span> followers</li>
                                     <li><span class="profile-stat-count">206</span> following</li>
                                 </ul>
-                            </div>
-                            <div class="profile-bio">
-                                <p><span class="profile-real-name">Jane Doe</span> Lorem ipsum dolor sit, amet consectetur adipisicing elit 📷✈️🏕️</p>
                             </div>
                         </div>
                         <!-- End of profile section -->
