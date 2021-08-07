@@ -1,5 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
 <main role="main">
       <div class="album bg-light">
@@ -10,7 +13,16 @@
                   <div class="row">
                       <div class="container">
                           <div class="card shadow-sm">
-                              <a href="{% url 'facebook:post_user' post.author %}" class="list-group-item">{{ post.author }}</a>
+                              <a href="{% url 'facebook:post_user' post.author %}" class="list-group-item">
+                                  <div class="profile-image">
+                                      {% if post.profile.image %}
+                                      <img src="{{post.profile.image.url}}" width="40" height="40">
+                                      {% else %}
+                                      <img src="{% static 'profile.jpg' %}" width="40" height="40">
+                                      {% endif %}
+                                  </div>
+                                  <div style="margin-left:50px; margin-top:6px;">{{ post.author }}</div>
+                              </a>
                               <img class="card-img-top" src="{{ post.image.url }}" alt=" Card image cap">
                               <div class="card-body">
 

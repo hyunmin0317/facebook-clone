@@ -20,6 +20,7 @@
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <li><a class="dropdown-item" href="{% url 'facebook:post_create' %}">글쓰기</a></li>
+                <li><a class="dropdown-item" href="{% url 'facebook:post_user' user.username %}">프로필</a></li>
                 <li><a class="dropdown-item" href="{% url 'common:logout' %}">Logout</a></li>
               </ul>
             </li>

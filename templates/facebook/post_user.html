@@ -2,7 +2,6 @@
 
 {% load static %}
 
-
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
@@ -16,16 +15,15 @@
                         <div class="profile">
                             <div class="profile-image">
                                 {% if profile.image %}
-                                <img src="{{profile.image.url}}" alt="">
+                                <img src="{{profile.image.url}}" style="padding-left:20px;" width="200" height="200">
                                 {% else %}
-                                <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" style="padding-left:20px;">
+                                <img src="{% static 'profile.jpg' %}" style="padding-left:20px;" width="200" height="200">
                                 {% endif %}
                             </div>
-                            <div class="profile-user-settings">
+                            <div class="profile-user-settings"><br>
                                 <h1 style="padding-left:30px;">{{users.username}}</h1>
                                 {% if request.user == users %}
                                 <button class="btn profile-edit-btn">Edit Profile</button>
-                                <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
                                 {% endif %}
                             </div>
                             <div class="profile-stats">
@@ -44,7 +42,17 @@
                   <div class="row">
                       <div class="container">
                           <div class="card shadow-sm">
-                              <a href="{% url 'facebook:post_user' post.author %}" class="list-group-item">{{ post.author }}</a>
+
+                              <a href="{% url 'facebook:post_user' post.author %}" class="list-group-item">
+                                  <div class="profile-image">
+                                      {% if profile.image %}
+                                      <img src="{{profile.image.url}}" width="40" height="40">
+                                      {% else %}
+                                      <img src="{% static 'profile.jpg' %}" width="40" height="40">
+                                      {% endif %}
+                                  </div>
+                                  <div style="margin-left:50px; margin-top:6px;">{{ post.author }}</div>
+                              </a>
                               <img class="card-img-top" src="{{ post.image.url }}" alt=" Card image cap">
                               <div class="card-body">
 
