@@ -20,12 +20,14 @@
                                 <img src="{% static 'profile.jpg' %}" style="padding-left:20px;" width="200" height="200">
                                 {% endif %}
                             </div>
+
                             <div class="profile-user-settings"><br>
                                 <h1 style="padding-left:30px;">{{users.username}}</h1>
                                 {% if request.user == users %}
-                                <button class="btn profile-edit-btn">Edit Profile</button>
+                                    <button type="submit" class="btn profile-edit-btn">Edit Profile</button>
                                 {% endif %}
                             </div>
+
                             <div class="profile-stats">
                                 <ul>
                                     <li><span class="profile-stat-count">{{posts.count}}</span> posts</li>

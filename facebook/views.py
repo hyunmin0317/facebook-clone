@@ -15,8 +15,8 @@ def home(request):
 
 def post_user(request, username):
     user = get_object_or_404(User, username=username)
-    posts = Post.objects.filter(author=user)
     profile = get_object_or_404(Profile, user=user)
+    posts = Post.objects.filter(author=user)
     context = {'users' : user, 'posts' : posts, 'profile' : profile}
     return render(request, 'facebook/post_user.html', context)
 

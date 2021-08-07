@@ -1,7 +1,10 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from common.forms import UserForm, ProfileForm
-from .models import Profile
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
 
 # 계정생성
 def signup(request):
@@ -25,3 +28,19 @@ def signup(request):
         forms = ProfileForm()
     context = {'form': form, 'forms': forms}
     return render(request, 'common/signup.html', context)
+
+@login_required(login_url='common:login')
+def modify(request, username):
+    if request.user.username != username:
+        messages.error(request, '수정권한이 없습니다')
+        return redirect('facebook:post_user', username=username)
+    user = get_object_or_404(User, username=username)
+    context = {'users':user}
+    return render(request, 'common/modify.html', context)
+
+
+
+
+
+
+
