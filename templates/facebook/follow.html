@@ -2,6 +2,7 @@
 {% load filter %}
 {% load static %}
 {% block content %}
+
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
 <div class="bodys"><br>
@@ -29,10 +30,10 @@
                                       </div>
 
 
-                                      {% confirm profile.user uprofile.following %}
+                                      {% confirm profile.user.username users.username as f %}
 
-                                      {% if profile.user in uprofile.following %}
-                                        <a href="#">
+                                      {% if f == 'follow' %}
+                                        <a href="{% url 'facebook:unfollowing' profile.user.username  %}">
                                               <button type="submit" class="btn profile-edit-btn" >
                                                   unfollow
                                               </button>

@@ -23,21 +23,29 @@
 
                             <div class="profile-user-settings"><br>
                                 <h1 style="padding-left:30px;">{{users.username}}</h1>
+
+                            </div>
+
+                            <div class="profile-stats">
+                                <ul>
+                                    <a href="{% url 'facebook:post_user' users.username  %}" style="text-decoration-line: none; color:black;">
+                                        <li><span class="profile-stat-count">{{posts.count}}</span> posts</li>
+                                    </a>
+                                    <a href="{% url 'facebook:follower_all' users.username  %}" style="margin-left:20px; text-decoration-line: none; color:black;">
+                                        <li><span class="profile-stat-count">{{profile.follower.count}}</span> followers</li>
+                                    </a>
+                                    <a href="{% url 'facebook:follow_all' users.username  %}" style="margin-left:20px; text-decoration-line: none; color:black;">
+                                        <li><span class="profile-stat-count">{{profile.follow.count}}</span> following</li>
+                                    </a>
+                                </ul>
+
                                 {% if request.user == users %}
-                                <a href="{% url 'common:modify' users.username  %}">
+                                <a href="{% url 'common:modify' users.username  %}" style="text-decoration-line: none; color:black;">
                                     <button type="submit" class="btn profile-edit-btn" href="{% url 'common:modify' users.username  %}">
                                         프로필 편집
                                     </button>
                                 </a>
                                 {% endif %}
-                            </div>
-
-                            <div class="profile-stats">
-                                <ul>
-                                    <li><span class="profile-stat-count">{{posts.count}}</span> posts</li>
-                                    <li><span class="profile-stat-count">{{profile.follower.count}}</span> followers</li>
-                                    <li><span class="profile-stat-count">{{profile.follow.count}}</span> following</li>
-                                </ul>
                             </div>
                         </div>
                         <!-- End of profile section -->

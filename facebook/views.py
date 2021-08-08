@@ -125,8 +125,7 @@ def vote_post(request, post_id, before):
 def follow(request):
     profiles = Profile.objects.all()
     user = request.user
-    uprofile = get_object_or_404(Profile, user=user)
-    context = {'profiles':profiles, 'users':user, 'uprofile':uprofile}
+    context = {'profiles':profiles, 'users':user}
     return render(request, 'facebook/follow.html', context)
 
 @login_required(login_url='common:login')
@@ -138,3 +137,39 @@ def following(request, username):
     profile.follow.add(user)
     fprofile.follower.add(request.user)
     return redirect('facebook:follow')
+
+@login_required(login_url='common:login')
+def unfollowing(request, username):
+    profile = get_object_or_404(Profile, user=request.user)
+    user = get_object_or_404(User, username=username)
+    fprofile = get_object_or_404(Profile, user=user)
+
+    profile.follow.remove(user)
+    fprofile.follower.remove(request.user)
+    return redirect('facebook:follow')
+
+def follow_all(request, username):
+    profiles = []
+    users = request.user
+    user = get_object_or_404(User, username=username)
+    profile = get_object_or_404(Profile, user=user)
+    following = profile.follow.all()
+
+    for f in following:
+        profiles.append(get_object_or_404(Profile, user=f))
+
+    context = {'profiles': profiles, 'users': users}
+    return render(request, 'facebook/follow.html', context)
+
+def follower_all(request, username):
+    profiles = []
+    users = request.user
+    user = get_object_or_404(User, username=username)
+    profile = get_object_or_404(Profile, user=user)
+    following = profile.follower.all()
+
+    for f in following:
+        profiles.append(get_object_or_404(Profile, user=f))
+
+    context = {'profiles': profiles, 'users': users}
+    return render(request, 'facebook/follow.html', context)

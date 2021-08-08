@@ -14,5 +14,8 @@ urlpatterns = [
     path('comment/delete/question/<int:comment_id>/<str:before>/', views.comment_delete_post, name='comment_delete_post'),
     path('vote/post/<int:post_id>/<str:before>/', views.vote_post, name='vote_post'),
     path('follow/', views.follow, name='follow'),
-    path('follow/<str:username>', views.following, name='following'),
+    path('follow/<str:username>/', views.following, name='following'),
+    path('unfollow/<str:username>/', views.unfollowing, name='unfollowing'),
+    path('follow/all/<str:username>/', views.follow_all, name='follow_all'),
+    path('follower/all/<str:username>/', views.follower_all, name='follower_all'),
 ]
