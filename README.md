@@ -11,5 +11,5 @@
 
 ## :computer: Webpage
 
-<img src="https://github.com/hyunmin0317/COVID19-KR/blob/main/static/webpage.png?raw=true" alt="icon" />
+<img src="https://github.com/hyunmin0317/facebook-clone/blob/master/static/webpage.png?raw=true" alt="icon" />
 
