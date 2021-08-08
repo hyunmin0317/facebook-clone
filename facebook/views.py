@@ -124,12 +124,17 @@ def vote_post(request, post_id, before):
 
 def follow(request):
     profiles = Profile.objects.all()
-    context = {'profiles':profiles}
+    user = request.user
+    uprofile = get_object_or_404(Profile, user=user)
+    context = {'profiles':profiles, 'users':user, 'uprofile':uprofile}
     return render(request, 'facebook/follow.html', context)
 
 @login_required(login_url='common:login')
 def following(request, username):
     profile = get_object_or_404(Profile, user=request.user)
     user = get_object_or_404(User, username=username)
+    fprofile = get_object_or_404(Profile, user=user)
+
     profile.follow.add(user)
-    return redirect('home')
+    fprofile.follower.add(request.user)
+    return redirect('facebook:follow')

@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
-
+{% load filter %}
 {% load static %}
-
 {% block content %}
 <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
 
@@ -22,16 +21,29 @@
                                       <img src="{% static 'profile.jpg' %}" width="40" height="40">
                                       {% endif %}
                                       <div style="margin-left:10px;">
-                                          <a href="{% url 'facebook:post_user' profile.user.username %}" class="list-group-item">
-                                              {{ profile.user.username }}
+                                          <a href="{% url 'facebook:post_user' profile.user.username %}" class="list-group-item" style="width:150px;">
+                                              <center>
+                                                  {{ profile.user.username }}
+                                              </center>
                                           </a>
                                       </div>
 
-                                      <a href="{% url 'facebook:following' profile.user.username  %}">
-                                          <button type="submit" class="btn profile-edit-btn">
-                                              follow
-                                          </button>
-                                      </a>
+
+                                      {% confirm profile.user uprofile.following %}
+
+                                      {% if profile.user in uprofile.following %}
+                                        <a href="#">
+                                              <button type="submit" class="btn profile-edit-btn" >
+                                                  unfollow
+                                              </button>
+                                          </a>
+                                      {% else %}
+                                          <a href="{% url 'facebook:following' profile.user.username  %}">
+                                              <button type="submit" class="btn profile-edit-btn" >
+                                                  follow
+                                              </button>
+                                          </a>
+                                      {% endif %}
                                   </div>
 
 
