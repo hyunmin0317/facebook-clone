@@ -12,3 +12,4 @@
 ## :computer: Webpage
 
 <img src="https://github.com/hyunmin0317/COVID19-KR/blob/main/static/webpage.png?raw=true" alt="icon" />
+
