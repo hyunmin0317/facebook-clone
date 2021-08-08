@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load filter %}
 {% load static %}
 {% block content %}
 
@@ -22,14 +23,52 @@
                                       {% endif %}
                                   </div>
                                   <div style="margin-left:50px; margin-top:6px;">{{ post.author }}</div>
+
                               </a>
                               <img class="card-img-top" src="{{ post.image.url }}" alt=" Card image cap">
                               <div class="card-body">
 
                                   <h4>{{ post.title }}</h4>
                                   <p class="card-text">{{ post.content }}</p>
-                                  <p class="card-text">{{ post.voter.count }}</p>
-                                   <a href="{% url 'facebook:vote_post' post.id 'home' %}" class="recommend btn btn-sm btn-secondary btn-block my-1">추천</a>
+                                  {% if post.modify_date %}
+                                  <p class="card-text">{{ post.modify_date }} (수정)</p>
+                                  {% else %}
+                                  <p class="card-text">{{ post.create_date }}</p>
+                                  {% endif %}
+
+                                  <p class="card-text">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                          <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                        </svg>
+                                      {{ post.voter.count }}
+                                  </p>
+
+
+                                  <center>
+                                      <a class="btn btn-primary btn-lg" href="{% url 'facebook:vote_post' post.id 'home' %}" class="recommend btn btn-sm btn-secondary btn-block my-1" style="width:45%;">
+                                          <h5>
+                                              {% confirm_like request.user.username post.id as l %}
+                                              {% if l == 'like' %}
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                                  <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                                </svg>
+                                              {% else %}
+                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                                                   <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                                               </svg>
+                                              {% endif %}
+                                              좋아요
+                                          </h5>
+                                      </a>
+                                      <a class="btn btn-primary btn-lg" href="{% url 'facebook:comment_create_post' post.id 'home' %}" class="recommend btn btn-sm btn-secondary btn-block my-1" style="width:45%;">
+                                          <h5>
+                                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left" viewBox="0 0 16 16">
+                                                  <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                                </svg>
+                                              댓글 달기
+                                          </h5>
+                                      </a>
+                                  </center>
 
                                   {% if post.comment_set.count > 0 %}
                                     <div class="mt-3">
@@ -37,9 +76,11 @@
                                         <div class="comment py-2 text-muted">  <!-- 댓글 각각에 comment 스타일 지정 -->
                                             <span style="white-space: pre-line;">{{ comment.content }}</span>
                                             <span>
-                                                - {{ comment.author }}, {{ comment.create_date }}
+                                                - {{ comment.author }},
                                                 {% if comment.modify_date %}
-                                                (수정:{{ comment.modify_date }})
+                                                {{ comment.modify_date }} (수정)
+                                                {% else %}
+                                                {{ comment.create_date }}
                                                 {% endif %}
                                             </span>
                                             {% if request.user == comment.author %}
@@ -50,10 +91,6 @@
                                     {% endfor %}
                                     </div>
                                     {% endif %}
-                                    <div>
-                                        <a href="{% url 'facebook:comment_create_post' post.id 'home' %}"
-                                           class="small"><small>댓글 추가 ..</small></a>  <!-- 댓글 추가 링크 -->
-                                    </div>
 
                               </div>
                           </div>

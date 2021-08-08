@@ -9,8 +9,9 @@ from .models import Post, Comment
 from .forms import PostForm, CommentForm
 
 def home(request):
+    users = request.user
     posts = Post.objects.order_by('-create_date')
-    context = {'posts' : posts}
+    context = {'posts' : posts, 'users':users}
     return render(request, 'facebook/home.html', context)
 
 def post_user(request, username):
@@ -122,6 +123,7 @@ def vote_post(request, post_id, before):
         return redirect('home')
     return redirect('facebook:post_user', post.author.username)
 
+@login_required(login_url='common:login')
 def follow(request):
     profiles = Profile.objects.all()
     user = request.user
